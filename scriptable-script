@@ -1,0 +1,90 @@
+let input = args.shortcutParameter[0]
+let isSingle = args.shortcutParameter[1] === "No" ? true : false
+let hasHecs = args.shortcutParameter[2] === "No" ? false : true
+
+let hecsRepayment
+let taxPayable
+let medicareLevy
+
+if (hasHecs && input < 46620) {
+    hecsRepayment = input * 0.00
+} else if (hasHecs && input < 53826) {
+    hecsRepayment = input * 0.01
+} else if (hasHecs && input < 57055) {
+    hecsRepayment = input * 0.02
+} else if (hasHecs && input < 60479) {
+    hecsRepayment = input * 0.025
+} else if (hasHecs && input < 64108) {
+    hecsRepayment = input * 0.03
+} else if (hasHecs && input < 67952) {
+    hecsRepayment = input * 0.035
+} else if (hasHecs && input < 72031) {
+    hecsRepayment = input * 0.04
+} else if (hasHecs && input < 76354) {
+    hecsRepayment = input * 0.045
+} else if (hasHecs && input < 80935) {
+    hecsRepayment = input * 0.05
+} else if (hasHecs && input < 85792) {
+    hecsRepayment = input * 0.055
+} else if (hasHecs && input < 90939) {
+    hecsRepayment = input * 0.06
+} else if (hasHecs && input < 96396) {
+    hecsRepayment = input * 0.065
+} else if (hasHecs && input < 102179) {
+    hecsRepayment = input * 0.07
+} else if (hasHecs && input < 108309) {
+    hecsRepayment = input * 0.075
+} else if (hasHecs && input < 114707) {
+    hecsRepayment = input * 0.08
+} else if (hasHecs && input < 121698) {
+    hecsRepayment = input * 0.085
+} else if (hasHecs && input < 128999) {
+    hecsRepayment = input * 0.09
+} else if (hasHecs && input < 136739) {
+    hecsRepayment = input * 0.095
+} else {
+    hecsRepayment = input * 0.1
+}
+
+
+if (input < 90000 && isSingle) {
+    medicareLevy = 0
+} else if (input < 105000 && isSingle) {
+    medicareLevy = 0.01 * input
+} else if (input < 140000 && isSingle) {
+    medicareLevy = 0.0125 * input
+} else if (input > 140000 && isSingle) {
+    medicareLevy = 0.015 * input
+} else if (input < 180000) {
+    medicareLevy = 0
+} else if (input < 210000) {
+    medicareLevy = input * 0.01
+} else if (input < 280000) {
+    medicareLevy = input * 0.0125
+} else {
+    medicareLevy = input * 1.5
+}
+
+
+if (input < 18200) {
+    taxPayable = 0
+} else if (input < 45000) {
+    taxPayable = 0.19 * (input - 18200)
+} else if (input < 120000) {
+    taxPayable = 5092 + 0.325 * (input - 45000)
+} else if (input < 180000) {
+    taxPayable = 29467 + 0.37 * (input - 120000)
+} else {
+    taxPayable = 51667 + 0.45 * (input - 180000)
+}
+
+console.log(taxPayable)
+console.log(`Tax payable including Medicare Levy: ${medicareLevy}`)
+console.log(`hecs repayment: ${hecsRepayment}`)
+
+let totalTax = taxPayable + medicareLevy + hecsRepayment
+
+let payload = { totalTax, taxPayable, medicareLevy, hecsRepayment }
+
+Script.setShortcutOutput(payload)
+
